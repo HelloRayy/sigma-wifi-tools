@@ -1,0 +1,793 @@
+/* ==========================================================================
+   SHADCN / UI THEMED STYLES FOR ROUTER KILLER
+   Zinc Dark Palette with Emerald Accent & Resizable Console
+   ========================================================================== */
+
+:root {
+  --background: #09090b;
+  --foreground: #f4f4f5;
+  --card: #121215;
+  --card-foreground: #f4f4f5;
+  --popover: #18181b;
+  --popover-foreground: #f4f4f5;
+  --primary: #10b981;
+  --primary-hover: #059669;
+  --primary-foreground: #022c22;
+  --secondary: #27272a;
+  --secondary-hover: #3f3f46;
+  --secondary-foreground: #f4f4f5;
+  --muted: #18181b;
+  --muted-foreground: #a1a1aa;
+  --accent: #27272a;
+  --accent-foreground: #f4f4f5;
+  --destructive: #ef4444;
+  --destructive-hover: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #27272a;
+  --border-focus: #10b981;
+  --ring: rgba(16, 185, 129, 0.35);
+  --input: #1c1c20;
+  --radius: 8px;
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  width: 375px;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-family);
+  font-size: 12.5px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app-container {
+  padding: 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* --------------------------------------------------------------------------
+   Header
+   -------------------------------------------------------------------------- */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-icon {
+  width: 28px;
+  height: 28px;
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--primary);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--foreground);
+  letter-spacing: -0.01em;
+}
+
+.brand-desc {
+  font-size: 10.5px;
+  color: var(--muted-foreground);
+  font-weight: 400;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   Badges (shadcn Badge)
+   -------------------------------------------------------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: 1px solid transparent;
+}
+
+.badge-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+
+.badge-idle {
+  background: var(--secondary);
+  color: var(--muted-foreground);
+  border-color: var(--border);
+}
+.badge-idle .badge-dot { background: var(--muted-foreground); }
+
+.badge-running {
+  background: rgba(16, 185, 129, 0.1);
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.3);
+}
+.badge-running .badge-dot {
+  background: #34d399;
+  box-shadow: 0 0 6px #34d399;
+  animation: pulse 1.5s infinite;
+}
+
+.badge-success {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.4);
+}
+.badge-success .badge-dot { background: #34d399; }
+
+.badge-error {
+  background: rgba(239, 68, 68, 0.12);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+.badge-error .badge-dot { background: #f87171; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+/* --------------------------------------------------------------------------
+   Cards (shadcn Card)
+   -------------------------------------------------------------------------- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.card-title {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--foreground);
+  letter-spacing: -0.01em;
+}
+
+.card-desc {
+  font-size: 10px;
+  color: var(--muted-foreground);
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   Multi-Credentials List
+   -------------------------------------------------------------------------- */
+.credentials-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cred-row {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr auto;
+  align-items: center;
+  gap: 6px;
+  background: #17171b;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 6px;
+}
+
+.cred-index-badge {
+  font-size: 9.5px;
+  font-weight: 700;
+  font-family: ui-monospace, monospace;
+  color: #a1a1aa;
+  background: #27272a;
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.cred-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.cred-input {
+  width: 100%;
+  height: 28px;
+  padding: 0 6px;
+  background-color: var(--input);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--foreground);
+  font-size: 11.5px;
+  outline: none;
+}
+
+.cred-input:focus {
+  border-color: var(--border-focus);
+}
+
+.cred-input-pass {
+  padding-right: 24px;
+}
+
+.cred-icon-eye {
+  position: absolute;
+  right: 4px;
+  background: transparent;
+  border: none;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+}
+
+.cred-icon-eye:hover {
+  color: var(--foreground);
+}
+
+.btn-del-cred {
+  background: transparent;
+  border: none;
+  color: #71717a;
+  cursor: pointer;
+  padding: 3px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.btn-del-cred:hover {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.btn-add-cred {
+  background: #18181b;
+  border: 1px dashed #3f3f46;
+  color: #a1a1aa;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 5px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: all 0.15s ease;
+}
+
+.btn-add-cred:hover {
+  background: #27272a;
+  border-color: var(--primary);
+  color: #34d399;
+}
+
+/* --------------------------------------------------------------------------
+   Segmented Tabs (shadcn Tabs)
+   -------------------------------------------------------------------------- */
+.tabs-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.15fr;
+  background-color: #1a1a1e;
+  padding: 3px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  gap: 3px;
+}
+
+.tab-item {
+  background: transparent;
+  border: none;
+  color: var(--muted-foreground);
+  padding: 5px 6px;
+  font-size: 11px;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: all 0.15s ease;
+}
+
+.tab-item:hover {
+  color: var(--foreground);
+}
+
+.tab-item.active {
+  background-color: #27272a;
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.tab-item[data-mode="HIDE"].active {
+  background-color: rgba(99, 102, 241, 0.2);
+  color: #c7d2fe;
+  border: 1px solid rgba(99, 102, 241, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   Callout / Alert Banners (shadcn Alert)
+   -------------------------------------------------------------------------- */
+.callout {
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 10.5px;
+  line-height: 1.4;
+  display: flex;
+  gap: 6px;
+}
+
+.callout-info {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: #a7f3d0;
+  align-items: center;
+}
+
+.callout-hide {
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.28);
+  color: #c7d2fe;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.callout-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #a5b4fc;
+}
+
+.callout-hide p {
+  color: #e0e7ff;
+  font-size: 10px;
+}
+
+/* --------------------------------------------------------------------------
+   Form Elements (shadcn Input, Label, Select)
+   -------------------------------------------------------------------------- */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #d4d4d8;
+}
+
+.label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.label-hint {
+  font-size: 9.5px;
+  color: var(--muted-foreground);
+}
+
+.btn-link-action {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 10.5px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 1px 4px;
+  border-radius: 3px;
+  transition: all 0.15s ease;
+}
+
+.btn-link-action:hover {
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.12);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.input {
+  width: 100%;
+  height: 32px;
+  padding: 0 9px;
+  background-color: var(--input);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--foreground);
+  font-size: 12px;
+  font-family: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.input::placeholder {
+  color: #52525b;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon {
+  padding-right: 28px;
+}
+
+.input-icon-btn {
+  position: absolute;
+  right: 6px;
+  background: transparent;
+  border: none;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+}
+
+.input-icon-btn:hover {
+  color: var(--foreground);
+}
+
+/* Custom Select with Chevron */
+.select-wrapper {
+  position: relative;
+}
+
+.select {
+  width: 100%;
+  height: 32px;
+  padding: 0 26px 0 9px;
+  background-color: var(--input);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--foreground);
+  font-size: 12px;
+  font-family: inherit;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.select:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.select-wrapper::after {
+  content: "";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid var(--muted-foreground);
+  border-bottom: 1.5px solid var(--muted-foreground);
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   Checkbox (shadcn Checkbox)
+   -------------------------------------------------------------------------- */
+.checkbox-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  margin-top: 2px;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkbox-box {
+  width: 15px;
+  height: 15px;
+  background-color: var(--input);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.checkbox-box svg {
+  opacity: 0;
+  transform: scale(0.6);
+  transition: all 0.15s ease;
+}
+
+.checkbox-container input:checked ~ .checkbox-box {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.checkbox-container input:checked ~ .checkbox-box svg {
+  opacity: 1;
+  transform: scale(1);
+  stroke: var(--primary-foreground);
+}
+
+.checkbox-container:hover .checkbox-box {
+  border-color: #52525b;
+}
+
+.checkbox-text {
+  font-size: 11px;
+  color: #d4d4d8;
+}
+
+.checkbox-text strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons (shadcn Button)
+   -------------------------------------------------------------------------- */
+.action-area {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.btn {
+  width: 100%;
+  height: 36px;
+  padding: 0 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.btn:active {
+  transform: scale(0.985);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.btn-indigo {
+  background-color: #6366f1;
+  color: #ffffff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.btn-indigo:hover {
+  background-color: #4f46e5;
+}
+
+.btn-destructive {
+  background-color: var(--destructive);
+  color: var(--destructive-foreground);
+}
+
+.btn-destructive:hover {
+  background-color: var(--destructive-hover);
+}
+
+.btn-ghost {
+  height: 24px;
+  padding: 0 7px;
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  color: var(--muted-foreground);
+  font-size: 10.5px;
+  font-weight: 500;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-ghost:hover {
+  background: var(--secondary-hover);
+  color: var(--foreground);
+  border-color: #3f3f46;
+}
+
+.btn-ghost-compact {
+  background: none;
+  border: none;
+  color: var(--muted-foreground);
+  font-size: 10px;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: color 0.15s ease;
+}
+
+.btn-ghost-compact:hover {
+  color: var(--foreground);
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   Resizable Console Card
+   -------------------------------------------------------------------------- */
+.card-console {
+  padding: 8px 10px;
+  gap: 6px;
+}
+
+.card-header-compact {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.console-title-area {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 3.5px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.dot-red { background: #ef4444; }
+.dot-yellow { background: #f59e0b; }
+.dot-green { background: #10b981; }
+
+.console-title {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted-foreground);
+}
+
+.console-body {
+  background-color: #040406;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  min-height: 80px;
+  max-height: 380px;
+  height: 90px;
+  resize: vertical;
+  overflow-y: auto;
+  padding: 6px 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 10.5px;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5px;
+}
+
+.console-body::-webkit-scrollbar {
+  width: 5px;
+}
+.console-body::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 3px;
+}
+
+.console-footer-hint {
+  font-size: 9px;
+  color: #52525b;
+  text-align: right;
+  font-style: italic;
+}
+
+.log-entry {
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.log-entry.info { color: #93c5fd; }
+.log-entry.success { color: #86efac; }
+.log-entry.warning { color: #fde047; }
+.log-entry.error { color: #fca5a5; }
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+.app-footer {
+  text-align: center;
+  font-size: 9.5px;
+  color: #71717a;
+  padding-top: 4px;
+  border-top: 1px solid var(--border);
+}

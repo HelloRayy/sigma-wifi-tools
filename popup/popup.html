@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Router Killer</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-title">Router Killer</h1>
+          <p class="brand-desc">WLAN & SSID Automation</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="btnPopout" class="btn-ghost" title="Buka di jendela sendiri (tidak akan tertutup)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+          <span>Jendela</span>
+        </button>
+        <div id="badgeStatus" class="badge badge-idle">
+          <span class="badge-dot"></span>
+          <span class="badge-label">IDLE</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="app-main">
+      <!-- Card 1: Router Type & Credentials -->
+      <section class="card">
+        <div class="card-header">
+          <h2 class="card-title">1. Profil & Kredensial Router</h2>
+          <p class="card-desc">Tipe router, IP host, dan daftar akun login (fallback otomatis).</p>
+        </div>
+        <div class="card-content">
+          <!-- Router Profile & IP in 2 Columns -->
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="label" for="routerType">Tipe Router</label>
+              <div class="select-wrapper">
+                <select id="routerType" class="select">
+                  <option value="ZTE_F660" selected>ZTE F660 / F609</option>
+                  <option value="HUAWEI_HG8245">Huawei HG8245</option>
+                  <option value="FIBERHOME">FiberHome</option>
+                  <option value="GENERIC">Router Lainnya / Generic</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="label" for="routerIp">IP Host</label>
+              <input type="text" id="routerIp" class="input" value="192.168.1.1" placeholder="192.168.1.1" required>
+            </div>
+          </div>
+
+          <!-- Dynamic Multi-Credentials List -->
+          <div class="form-group">
+            <div class="label-row">
+              <label class="label">Akun Login (Username & Password)</label>
+              <span class="label-hint">Coba akun berikutnya jika gagal</span>
+            </div>
+            <div id="credentialsList" class="credentials-list">
+              <!-- Rendered via popup.js -->
+            </div>
+            <button type="button" id="btnAddCred" class="btn-add-cred">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              <span>Tambah Akun Cadangan (Fallback)</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Card 2: Mode Selector & WLAN Configuration -->
+      <section class="card">
+        <div class="card-header">
+          <div class="header-with-tabs">
+            <div>
+              <h2 id="modeCardTitle" class="card-title">2. Ganti Nama SSID</h2>
+              <p id="modeCardDesc" class="card-desc">Ubah nama siaran WiFi pada slot yang dipilih.</p>
+            </div>
+          </div>
+          <!-- Segmented Tab Group (3 Modes: Ganti, Tambah, Sembunyikan) -->
+          <div class="tabs-list">
+            <button type="button" class="tab-item active" data-mode="RENAME">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              </svg>
+              <span>Ganti</span>
+            </button>
+            <button type="button" class="tab-item" data-mode="ENABLE">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              <span>Tambah</span>
+            </button>
+            <button type="button" class="tab-item" data-mode="HIDE">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+              <span>Sembunyikan</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="card-content">
+          <!-- Target SSID Dropdown (Expanded to 6 Slots) -->
+          <div class="form-group">
+            <div class="label-row">
+              <label class="label" for="targetSsid" id="labelTargetSsid">Pilih SSID Target</label>
+              <span class="label-hint">Fallback ke slot terakhir jika tak tersedia</span>
+            </div>
+            <div class="select-wrapper">
+              <select id="targetSsid" class="select">
+                <option value="SSID1">SSID1</option>
+                <option value="SSID2">SSID2</option>
+                <option value="SSID3" selected>SSID3</option>
+                <option value="SSID4">SSID4</option>
+                <option value="SSID5">SSID5 (Jika ada)</option>
+                <option value="SSID6">SSID6 (Jika ada)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- SSID Name Input (Hidden on HIDE mode) -->
+          <div class="form-group" id="groupSsidName">
+            <div class="label-row">
+              <label class="label" for="ssidName">Nama SSID Baru</label>
+              <span class="label-hint">Maks. 32 karakter</span>
+            </div>
+            <input type="text" id="ssidName" class="input" placeholder="Masukkan nama WiFi baru..." maxlength="32">
+          </div>
+
+          <!-- WiFi Password Input (Shown on ENABLE mode) -->
+          <div class="form-group" id="groupWifiPass" style="display: none;">
+            <div class="label-row">
+              <label class="label" for="wifiPass">Password WiFi (WPA Key)</label>
+              <button type="button" id="btnGenPass" class="btn-link-action" title="Buat password acak">🎲 Acak</button>
+            </div>
+            <div class="input-wrapper">
+              <input type="password" id="wifiPass" class="input input-with-icon" placeholder="Minimal 8 karakter..." minlength="8" maxlength="63">
+              <button type="button" id="toggleWifiPass" class="input-icon-btn" title="Tampilkan/Sembunyikan">
+                <svg id="eyeWifiIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Callout Info: Enable Mode -->
+          <div id="calloutEnable" class="callout callout-info" style="display: none;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span>Slot akan diaktifkan (<strong>Enable SSID: ON</strong>) dan password WPA disetel otomatis.</span>
+          </div>
+
+          <!-- Callout Info: Hide Mode -->
+          <div id="calloutHide" class="callout callout-hide" style="display: none;">
+            <div class="callout-header">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+              <strong>Mode Sembunyikan SSID (Hidden Network)</strong>
+            </div>
+            <p>WiFi <strong>tetap aktif</strong> dan aman, namun namanya tidak akan terlihat di daftar pencarian WiFi HP.</p>
+          </div>
+
+          <!-- Auto Submit Checkbox -->
+          <div class="form-group">
+            <label class="checkbox-container">
+              <input type="checkbox" id="autoSubmit" checked>
+              <span class="checkbox-box">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </span>
+              <span class="checkbox-text">Otomatis klik <strong>Submit</strong> setelah selesai</span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Action Buttons -->
+      <div class="action-area">
+        <button id="btnStart" class="btn btn-primary">
+          <svg id="btnStartIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          <span id="btnStartText">Ganti Nama SSID</span>
+        </button>
+        <button id="btnStop" class="btn btn-destructive" style="display: none;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+          </svg>
+          <span>Hentikan Proses</span>
+        </button>
+      </div>
+
+      <!-- Card 3: Resizable Live Execution Log Console -->
+      <section class="card card-console">
+        <div class="card-header card-header-compact">
+          <div class="console-title-area">
+            <div class="terminal-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <span class="console-title">Live Execution Logs</span>
+          </div>
+          <button id="btnClearLog" class="btn-ghost-compact">Bersihkan</button>
+        </div>
+        <div id="logBox" class="console-body" title="Tarik pojok kanan bawah untuk memperbesar log">
+          <div class="log-entry info">Siap. Pilih router, akun, dan mode lalu klik tombol di atas.</div>
+        </div>
+        <div class="console-footer-hint">💡 Tarik sudut bawah untuk memperbesar area log</div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <span>Router Killer • Manifest V3</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
